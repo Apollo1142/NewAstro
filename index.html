@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אסטרואידים | נועם גפן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --bg2: #0a1020;
+    --bg3: #0f1830;
+    --accent: #f4a22d;
+    --accent2: #e05c1a;
+    --blue: #3a7bd5;
+    --lightblue: #7ab8f5;
+    --text: #e8edf5;
+    --muted: #8a9ab5;
+    --border: rgba(255,255,255,0.08);
+    --card: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    direction: rtl;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    background: rgba(5,8,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo { font-weight: 900; font-size: 1.1rem; color: var(--accent); letter-spacing: 0.03em; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.88rem;
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: radial-gradient(ellipse at 30% 50%, rgba(58,123,213,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(244,162,45,0.08) 0%, transparent 50%),
+                var(--bg);
+  }
+  .stars {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 80% 60%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 70%, rgba(255,255,255,0.7) 0%, transparent 100%);
+  }
+  .asteroid-orbit {
+    position: absolute; width: 420px; height: 420px;
+    border: 1px solid rgba(244,162,45,0.15);
+    border-radius: 50%; left: 50%; top: 50%;
+    transform: translate(-50%,-50%);
+    animation: spin 20s linear infinite;
+  }
+  .asteroid-orbit::after {
+    content: '☄'; position: absolute; top: -12px; left: 50%;
+    font-size: 1.3rem; color: var(--accent); filter: drop-shadow(0 0 6px var(--accent));
+  }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  .hero-content { text-align: center; position: relative; z-index: 2; padding: 2rem; }
+  .hero-tag {
+    display: inline-block; background: rgba(244,162,45,0.15);
+    border: 1px solid rgba(244,162,45,0.35); border-radius: 20px;
+    padding: 0.3rem 1rem; font-size: 0.8rem; color: var(--accent);
+    font-family: 'Space Mono', monospace; margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 70%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.2rem;
+  }
+  .hero-sub {
+    font-size: 1.15rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem;
+  }
+  .hero-stats {
+    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.5rem; text-align: center;
+    cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden;
+    min-width: 130px;
+  }
+  .stat-card:hover { border-color: rgba(244,162,45,0.5); transform: translateY(-3px); }
+  .stat-val { font-family: 'Space Mono', monospace; font-size: 1.3rem; color: var(--accent); font-weight: 700; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+  .stat-hint { font-size: 0.65rem; color: rgba(244,162,45,0.5); margin-top: 0.4rem; }
+  .stat-tooltip { display: none; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-size: 2.2rem; font-weight: 900; margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .section-sub { color: var(--muted); margin-bottom: 3rem; font-size: 1rem; }
+  .divider { width: 60px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1rem; }
+
+  /* PHYSICS CARDS */
+  .physics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .phys-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.8rem;
+    transition: all 0.25s;
+  }
+  .phys-card:hover { border-color: rgba(58,123,213,0.4); transform: translateY(-2px); }
+  .phys-card .icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .phys-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.7rem; color: var(--lightblue); }
+  .phys-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+  .formula {
+    font-family: 'Space Mono', monospace; background: rgba(58,123,213,0.1);
+    border: 1px solid rgba(58,123,213,0.25); border-radius: 8px;
+    padding: 0.5rem 1rem; margin-top: 0.8rem; font-size: 0.9rem;
+    color: var(--lightblue); display: inline-block;
+  }
+
+  /* TYPES SECTION */
+  .types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.2rem; }
+  .type-card {
+    border-radius: 14px; padding: 1.5rem; border: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    position: relative; overflow: hidden;
+  }
+  .type-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(244,162,45,0.15), transparent);
+    border-radius: 50%;
+  }
+  .type-card h3 { font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.6rem; }
+  .type-card p { font-size: 0.88rem; color: var(--muted); }
+  .type-badge {
+    display: inline-block; font-size: 0.7rem; font-family: 'Space Mono', monospace;
+    background: rgba(244,162,45,0.15); border: 1px solid rgba(244,162,45,0.3);
+    border-radius: 4px; padding: 0.15rem 0.5rem; color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  /* SCIENTISTS */
+  .scientists-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+  .sci-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem; text-align: center;
+    transition: all 0.25s;
+  }
+  .sci-card:hover { border-color: rgba(244,162,45,0.4); }
+  .sci-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; font-weight: 900; color: #fff;
+    margin: 0 auto 1rem;
+  }
+  .sci-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .sci-years { font-size: 0.78rem; color: var(--accent); font-family: 'Space Mono', monospace; margin-bottom: 0.7rem; }
+  .sci-card p { font-size: 0.85rem; color: var(--muted); }
+  .sci-discovery {
+    margin-top: 0.8rem; font-size: 0.78rem; color: var(--lightblue);
+    padding: 0.4rem 0.7rem; background: rgba(58,123,213,0.1);
+    border-radius: 6px; border: 1px solid rgba(58,123,213,0.2);
+  }
+
+  /* EXPERIMENTS */
+  .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .exp-card {
+    display: grid; grid-template-columns: 60px 1fr; gap: 1.5rem;
+    align-items: start; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: rgba(244,162,45,0.3); }
+  .exp-num {
+    font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700;
+    color: rgba(244,162,45,0.3); line-height: 1;
+  }
+  .exp-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .exp-card p { font-size: 0.9rem; color: var(--muted); }
+  .exp-result {
+    margin-top: 0.8rem; padding: 0.6rem 1rem;
+    background: rgba(58,123,213,0.08); border-right: 3px solid var(--blue);
+    font-size: 0.85rem; color: var(--lightblue); border-radius: 0 6px 6px 0;
+  }
+
+  /* MINDMAP */
+  .mindmap-wrap {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2.5rem; overflow-x: auto;
+  }
+  .mindmap-center {
+    text-align: center; margin-bottom: 2.5rem;
+  }
+  .mindmap-center .center-node {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000; font-weight: 900; font-size: 1.2rem;
+    border-radius: 50%; width: 120px; height: 120px;
+    line-height: 120px; text-align: center;
+  }
+  .mindmap-branches {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+  }
+  .branch {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .branch:hover { background: rgba(244,162,45,0.05); border-color: rgba(244,162,45,0.3); }
+  .branch-title { font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; font-size: 0.95rem; }
+  .branch-detail { font-size: 0.82rem; color: var(--muted); display: none; margin-top: 0.5rem; }
+  .branch.open .branch-detail { display: block; }
+  .branch-items { list-style: none; }
+  .branch-items li {
+    font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* LINKS */
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+  .link-section h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+  .link-card {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    text-decoration: none; color: var(--text);
+    transition: all 0.2s; margin-bottom: 0.8rem;
+  }
+  .link-card:hover { border-color: rgba(244,162,45,0.4); transform: translateX(-3px); }
+  .link-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .link-card-body h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .link-card-body p { font-size: 0.8rem; color: var(--muted); }
+  .link-source { font-size: 0.72rem; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 0.3rem; }
+
+  /* VIDEO ROW */
+  .video-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .video-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden; transition: all 0.25s;
+  }
+  .video-card:hover { border-color: rgba(244,162,45,0.4); transform: translateY(-2px); }
+  .video-thumb {
+    width: 100%; aspect-ratio: 16/9; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; cursor: pointer; position: relative; overflow: hidden;
+    text-decoration: none; color: inherit;
+    background-size: cover; background-position: center;
+    transition: filter 0.2s;
+  }
+  .video-thumb:hover { filter: brightness(1.2); }
+  .video-thumb .play-btn {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(244,162,45,0.9); display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; z-index: 2; transition: transform 0.2s;
+    box-shadow: 0 0 24px rgba(244,162,45,0.4);
+  }
+  .video-thumb:hover .play-btn { transform: scale(1.12); }
+  .video-thumb .thumb-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.35);
+  }
+  .video-thumb img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .video-info { padding: 1rem; }
+  .video-info h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .video-info p { font-size: 0.8rem; color: var(--muted); }
+  .video-tag { font-size: 0.72rem; color: var(--accent); font-family: 'Space Mono', monospace; margin-top: 0.4rem; display: block; }
+
+  /* STAT POPUP */
+  .stat-popup-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  .stat-popup-overlay.active { display: flex; }
+  .stat-popup {
+    background: #0f1830; border: 1px solid rgba(244,162,45,0.4);
+    border-radius: 20px; padding: 2rem; max-width: 420px; width: 90%;
+    position: relative; direction: rtl; text-align: right;
+  }
+  .stat-popup-close {
+    position: absolute; top: 1rem; left: 1rem;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.4rem; cursor: pointer; line-height: 1;
+  }
+  .stat-popup-close:hover { color: var(--text); }
+  .stat-popup-val { font-family: 'Space Mono', monospace; font-size: 2rem; color: var(--accent); font-weight: 700; margin-bottom: 0.3rem; }
+  .stat-popup-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.2rem; }
+  .stat-popup-body { font-size: 0.95rem; color: var(--text); line-height: 1.8; }
+
+  /* SUMMARY */
+  .summary-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem;
+  }
+  .summary-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent); }
+  .summary-box p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+  .highlight { color: var(--lightblue); font-weight: 600; }
+
+  .feedback-card {
+    background: rgba(58,123,213,0.06); border: 1px solid rgba(58,123,213,0.2);
+    border-radius: 14px; padding: 1.5rem; margin-top: 1.5rem;
+  }
+  .feedback-card h4 { color: var(--lightblue); font-size: 0.95rem; margin-bottom: 0.7rem; }
+  .feedback-card p { font-size: 0.88rem; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem;
+    text-align: center; color: var(--muted); font-size: 0.85rem;
+  }
+  footer strong { color: var(--accent); }
+
+  /* FULL-WIDTH SECTION BG */
+  .section-alt { background: var(--bg2); }
+  .section-alt > section { /* nothing extra */ }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 0.8rem; }
+    .nav-links a { font-size: 0.78rem; }
+    .hero-stats { gap: 0.8rem; }
+    .exp-card { grid-template-columns: 40px 1fr; gap: 1rem; }
+    .exp-num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">☄ אסטרואידים</div>
+  <ul class="nav-links">
+    <li><a href="#physics">פיזיקה</a></li>
+    <li><a href="#types">סוגים</a></li>
+    <li><a href="#scientists">מדענים</a></li>
+    <li><a href="#experiments">ניסויים</a></li>
+    <li><a href="#mindmap">מפת חשיבה</a></li>
+    <li><a href="#sources">מקורות</a></li>
+    <li><a href="#summary">סיכום</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars"></div>
+  <div class="asteroid-orbit"></div>
+  <div class="hero-content">
+    <div class="hero-tag">אסטרואידים · פיזיקה · נועם גפן י״ב2</div>
+    <h1>אסטרואידים</h1>
+    <p class="hero-sub">גושי סלע ומתכת שנסחפים במערכת השמש מאז ראשיתה — שרידי יצירת כוכבי הלכת, שומרי ההיסטוריה הקוסמית, ואיום פוטנציאלי לכדור הארץ.</p>
+    <div class="hero-stats">
+      <div class="stat-card" onclick="openPopup('pop1')">
+        <div class="stat-val">~1M+</div>
+        <div class="stat-label">אסטרואידים ידועים</div>
+        <div class="stat-hint">לחץ למידע נוסף ℹ</div>
+      </div>
+      <div class="stat-card" onclick="openPopup('pop2')">
+        <div class="stat-val">940 ק״מ</div>
+        <div class="stat-label">קוטר קרס (הגדול ביותר)</div>
+        <div class="stat-hint">לחץ למידע נוסף ℹ</div>
+      </div>
+      <div class="stat-card" onclick="openPopup('pop3')">
+        <div class="stat-val">4.6B שנה</div>
+        <div class="stat-label">גיל הממוצע</div>
+        <div class="stat-hint">לחץ למידע נוסף ℹ</div>
+      </div>
+      <div class="stat-card" onclick="openPopup('pop4')">
+        <div class="stat-val">~30 km/s</div>
+        <div class="stat-label">מהירות ממוצעת</div>
+        <div class="stat-hint">לחץ למידע נוסף ℹ</div>
+      </div>
+      <div class="stat-card" onclick="openPopup('pop5')">
+        <div class="stat-val">~2,300</div>
+        <div class="stat-label">PHAs (מסכנים)</div>
+        <div class="stat-hint">לחץ למידע נוסף ℹ</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAT POPUPS -->
+<div class="stat-popup-overlay" id="pop1" onclick="if(event.target===this)closePopup('pop1')">
+  <div class="stat-popup">
+    <button class="stat-popup-close" onclick="closePopup('pop1')">✕</button>
+    <div class="stat-popup-val">~1,000,000+</div>
+    <div class="stat-popup-label">אסטרואידים ידועים במערכת השמש</div>
+    <div class="stat-popup-body">
+      נכון ל-2024, זוהו ותועדו יותר ממיליון אסטרואידים. רובם המוחלט (כ-95%) נמצאים בחגורת האסטרואידים הראשית, בין מסלולי מאדים וצדק.<br><br>
+      אבל זה רק קצה הקרחון — מדענים מעריכים שיש <strong>מיליארדים</strong> של אסטרואידים קטנים (מתחת לקילומטר) שעדיין לא זוהו. הסיבה שלא מספרים אותם: הם קטנים מדי ועמומים מדי לטלסקופים הקיימים.<br><br>
+      כל שנה מתגלים עשרות אלפי אסטרואידים חדשים בעזרת סקרי שמיים אוטומטיים כמו <strong>Catalina Sky Survey</strong> ו-<strong>Pan-STARRS</strong>.
+    </div>
+  </div>
+</div>
+
+<div class="stat-popup-overlay" id="pop2" onclick="if(event.target===this)closePopup('pop2')">
+  <div class="stat-popup">
+    <button class="stat-popup-close" onclick="closePopup('pop2')">✕</button>
+    <div class="stat-popup-val">940 ק״מ</div>
+    <div class="stat-popup-label">קוטר קרס — הגוף הגדול ביותר בחגורת האסטרואידים</div>
+    <div class="stat-popup-body">
+      <strong>קרס (Ceres)</strong> הוא כל כך גדול עד שנאסא מגדירה אותו כ"כוכב לכת ננסי" — לא רק אסטרואיד. קוטרו 940 ק"מ הופך אותו לגדול מישראל כולה פי ~45.<br><br>
+      להמחשה: אם תטוס על כוכל בגובה 10,000 מטר, תצטרך לעוף <strong>94 שעות ברצף</strong> רק כדי לחצות אותו מקצה לקצה. הירח, לשם השוואה, גדול פי 3.7 ממנו.<br><br>
+      מה שמיוחד בקרס: <strong>יש עליו מים!</strong> משימת Dawn של נאסא גילתה שמתחת לפני השטח יש שכבת קרח, ואולי אפילו אוקיינוס נוזלי. שתי נקודות בהירות מסתוריות על פני השטח (שנקראו "הנקודות הבהירות של אוקאטור") התבררו כמשקעי מלח ממים שהתאדו.
+    </div>
+  </div>
+</div>
+
+<div class="stat-popup-overlay" id="pop3" onclick="if(event.target===this)closePopup('pop3')">
+  <div class="stat-popup">
+    <button class="stat-popup-close" onclick="closePopup('pop3')">✕</button>
+    <div class="stat-popup-val">4,600,000,000 שנה</div>
+    <div class="stat-popup-label">גיל ממוצע של אסטרואידים</div>
+    <div class="stat-popup-body">
+      4.6 מיליארד שנה — זהו גיל מערכת השמש כולה. האסטרואידים הם <strong>שרידים מתקופת הלידה</strong> שלה: חומר שלא הצליח להתחבר לכוכב לכת בגלל כוח הכבידה האדיר של צדק, שפיזר אותו.<br><br>
+      כדי להמחיש: אם תדחס את כל גיל כדור הארץ לשנה קלנדרית אחת, <strong>האדם הראשון צץ ב-31 בדצמבר בשעה 23:58</strong>. כלומר — האסטרואידים קדמו לנו ב-4.6 מיליארד שנה, ו"ראו" את כל ההיסטוריה הקוסמית.<br><br>
+      לכן מדענים קוראים להם <strong>"כמוסות זמן"</strong> — החומר שלהם לא עבר שינוי מאז היווצרות מערכת השמש. ניתוח שלהם הוא כמו קריאת ספר ההיסטוריה הקוסמי המלא.
+    </div>
+  </div>
+</div>
+
+<div class="stat-popup-overlay" id="pop4" onclick="if(event.target===this)closePopup('pop4')">
+  <div class="stat-popup">
+    <button class="stat-popup-close" onclick="closePopup('pop4')">✕</button>
+    <div class="stat-popup-val">~30 ק"מ/שנייה</div>
+    <div class="stat-popup-label">מהירות ממוצעת של אסטרואידים בחגורה</div>
+    <div class="stat-popup-body">
+      30 קילומטר בשנייה = <strong>108,000 קמ"ש</strong>. לשם השוואה: מטוס נוסעים מהיר טס ב-900 קמ"ש — האסטרואיד מהיר ממנו פי 120.<br><br>
+      המשמעות לאנרגיה קינטית היא עצומה. נוסחת Ek = ½mv²: אסטרואיד בקוטר <strong>1 ק"מ</strong> ובמהירות 30 קמ"ש מחזיק אנרגיה שווה ל-<strong>47,000 פצצות גרעיניות</strong> מסוג הירושימה.<br><br>
+      גם בפגיעה עם כדור הארץ, מהירות ההתנגשות תהיה בין 11 ל-72 קמ"ש (תלוי בזווית המסלול) — בגלל כוח הכבידה של כדור הארץ שמאיץ אותו בנוסף. לכן גם אסטרואיד יחסית קטן יכול לגרום להרס אדיר.
+    </div>
+  </div>
+</div>
+
+<div class="stat-popup-overlay" id="pop5" onclick="if(event.target===this)closePopup('pop5')">
+  <div class="stat-popup">
+    <button class="stat-popup-close" onclick="closePopup('pop5')">✕</button>
+    <div class="stat-popup-val">~2,300 PHAs</div>
+    <div class="stat-popup-label">Potentially Hazardous Asteroids — אסטרואידים מסוכנים פוטנציאלית</div>
+    <div class="stat-popup-body">
+      <strong>PHA = Potentially Hazardous Asteroid.</strong> הגדרה מדעית מדויקת: אסטרואיד שגודלו מעל 140 מטר <em>וגם</em> מסלולו עלול להתקרב לכדור הארץ בפחות מ-0.05 AU (7.5 מיליון ק"מ).<br><br>
+      למה 140 מטר? מתחת לגודל הזה, האטמוספרה של כדור הארץ מפרקת את האסטרואיד לפני שיגיע לקרקע. מעליו — הוא מגיע לפני השטח ויכול לגרום לנזק אזורי עד גלובלי.<br><br>
+      <strong>הבשורה הטובה:</strong> אף אחד מה-~2,300 PHAs הידועים לא צפוי לפגוע בכדור הארץ ב-100 השנה הקרובות. נאסא עוקבת אחריהם כל הזמן דרך מערכת <strong>Sentry</strong>, ומעדכנת הסתברויות פגיעה בזמן אמת.
+    </div>
+  </div>
+</div>
+
+<!-- PHYSICS -->
+<section id="physics">
+  <div class="divider"></div>
+  <h2 class="section-title">הפיזיקה של האסטרואידים</h2>
+  <p class="section-sub">עיון מעמיק בכוחות, בחוקים ובתופעות הפיזיקליות שמשלטות על אסטרואידים</p>
+  <div class="physics-grid">
+
+    <div class="phys-card">
+      <div class="icon">🌌</div>
+      <h3>כוח הכבידה ומסלולים אליפטיים</h3>
+      <p>אסטרואידים נעים במסלולים אליפטיים סביב השמש, בהתאם לחוק הכבידה של ניוטון. הכוח בין האסטרואיד לשמש הוא:</p>
+      <div class="formula">F = G · M·m / r²</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">G = קבוע הכבידה (6.674×10⁻¹¹ N·m²/kg²), M = מסת השמש (~2×10³⁰ kg), m = מסת האסטרואיד, r = מרחק. ככל שהאסטרואיד קרוב יותר לשמש — כוח הכבידה גדול יותר, ומהירותו גבוהה יותר.</p>
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">מדוע המסלול אליפטי ולא עגול? כי אליפסה היא הפתרון הכללי למשוואות התנועה תחת כוח הפוך לריבוע המרחק — כוח שאף פעם לא "מחפיף" בדיוק את הכבידה הדרושה למסלול מעגלי מושלם. רק בתנאים מאוד מיוחדים (מהירות ספציפית בדיוק) מתקבל עיגול.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">⚡</div>
+      <h3>אנרגיה קינטית ואנרגיה פוטנציאלית</h3>
+      <p>כל אסטרואיד נע מחזיק אנרגיה קינטית אדירה. בנקודת הפריהליון (הקרובה ביותר לשמש) מהירותו מקסימלית — אנרגיה קינטית מרבית:</p>
+      <div class="formula">Ek = ½mv²</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">במהירות 30 km/s ומסת 1 טון, האנרגיה הקינטית שווה לפיצוץ של ~100 טון TNT. אסטרואיד בקוטר 1 ק״מ — אנרגיה שווה לאלפי פצצות גרעיניות.</p>
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">חשוב להבין: האנרגיה גדלה עם ריבוע המהירות (v²). לכן אסטרואיד שמהירותו כפולה הוא מסוכן פי 4, לא פי 2. ואנרגיה זו מתחלקת בפגיעה — חלקה לחום (אדי פלזמה), חלקה לגל הדף (רועש כמו פיצוץ גרעיני), וחלקה לזריקת חומר מהפצצה.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">🔄</div>
+      <h3>חוקי קפלר למסלולי אסטרואידים</h3>
+      <p>שלושת חוקי קפלר מתארים את תנועת כל גוף סביב השמש, כולל אסטרואידים. חוק השטחים (החוק השני) קובע:</p>
+      <div class="formula">dA/dt = const</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">הקו המחבר שמש-אסטרואיד סורק שטחים שווים בזמנים שווים. לכן אסטרואיד מאיץ כשמתקרב לשמש ומאט כשמתרחק — שימור תנע זוויתי בפעולה.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">💥</div>
+      <h3>התנגשות ועברת תנע</h3>
+      <p>בהתנגשות בין אסטרואיד לגוף אחר (כולל כדור הארץ), חוק שימור התנע חל:</p>
+      <div class="formula">m₁v₁ + m₂v₂ = const</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">בהתנגשות לא-אלסטית (כמו עם קרקע) האנרגיה הקינטית מומרת לחום, גל הדף, ורסיסים. ניסוי DART של נאסא ניצל את העיקרון הזה בדיוק כדי לשנות את מסלול דימורפוס.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">☀️</div>
+      <h3>אפקט יארקובסקי</h3>
+      <p>לחץ קרינת השמש וחימום בלתי-אחיד יוצרים דחיפה קטנה אך מצטברת לאורך זמן. אסטרואיד מסתובב קולט קרינה מצד אחד ומפלט חום מהצד המאוחר:</p>
+      <div class="formula">a_Y ∝ (1/ρ·r)</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">ρ = צפיפות, r = רדיוס. ההשפעה קטנה — מ"מ עד ס"מ לשנה — אך בפרק זמן של מיליוני שנים היא יכולה להעביר אסטרואיד ממסלול בטוח לנתיב מתנגש!</p>
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">מדוע החום לא מקוזז? כי יש עיכוב תרמי — הצד שקלט את האור מגיע לטמפרטורה מרבית רק אחרי שהתסובב קצת. לכן "בולם החום" תמיד לא מיושר עם כיוון השמש, ויוצר כוח בכיוון לא-סימטרי. הכיוון (האצה או בלימה) תלוי בכיוון סיבוב האסטרואיד.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">🌡️</div>
+      <h3>כניסה לאטמוספרה: פיזיקת הבלימה</h3>
+      <p>כשאסטרואיד נכנס לאטמוספרה, הוא דוחס את האוויר בקדמתו ומחמם אותו לאלפי מעלות (לא חיכוך!). הכוח האוורודינמי:</p>
+      <div class="formula">F_D = ½ · C_D · ρ_air · A · v²</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">C_D = מקדם גרר, A = שטח חתך. עבור אסטרואידים קטנים (<25m) האטמוספרה מפרקת אותם לחלוטין (כמו בטונגוסקה 1908). גדולים יותר מגיעים לפני השטח.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">🪐</div>
+      <h3>נקודות לגראנז' ואסטרואידים טרויאניים</h3>
+      <img src="C:\Users\User\Downloads\LR.jpeg" height="250">
+      <p>בנקודות לגראנז' (L4, L5) של כוכב לכת, כוחות הכבידה של השמש וכוכב הלכת + כוח הצנטריפוגלי מאזנים בדיוק. כוח נטו = 0:</p>
+      <div class="formula">F_☉ + F_planet + F_cf = 0</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">למה L4 ו-L5 יציבות אך L1, L2, L3 לא? כי L4/L5 נמצאות בצמתים של "קערת פוטנציאל" יציבה — גוף שסוטה מעט חוזר אל הנקודה כי כוחות הכבידה "נוגסים" אותו פנימה. זה כמו כדור בתחתית קערה לעומת כדור על ראש גבעה. L1/L2/L3, לעומת זאת, הן נקודות אוכף — יציבות בציר אחד, לא יציבות בשני.</p>
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:var(--muted);">צדק מכיל יותר מ-12,000 אסטרואידים טרויאניים — מסלולים שקיימים מאז לידת מערכת השמש.</p>
+    </div>
+
+    <div class="phys-card">
+      <div class="icon">🔭</div>
+      <h3>ספקטרוסקופיה ומבנה כימי</h3>
+      <p>ניתוח ספקטרום האור המוחזר מאסטרואידים מגלה את הרכבם. כל יסוד בולע/פולט אורכי גל ייחודיים (קווי פרנהופר):</p>
+      <div class="formula">E = hf = hc/λ</div>
+      <p style="margin-top:0.7rem; font-size:0.85rem; color:var(--muted);">h = קבוע פלנק. שלושה סוגים עיקריים: C (פחמני — 75%), S (סיליקטי — 17%), M (מתכתי — 8%). חלק מהאסטרואידים מכילים מים קפואים ואורגניקה!</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- TYPES -->
+<div class="section-alt">
+<section id="types" style="max-width:1100px; margin:0 auto; padding:5rem 2rem;">
+  <div class="divider"></div>
+  <h2 class="section-title">סוגי אסטרואידים</h2>
+  <p class="section-sub">אסטרואידים מסווגים לפי מסלולם, הרכבם ומיקומם במערכת השמש</p>
+  <div class="types-grid">
+    <div class="type-card">
+      <div class="type-badge">MAIN BELT</div>
+      <h3>חגורת האסטרואידים הראשית</h3>
+      <p>אזור בין מאדים (1.5 AU) לצדק (5.2 AU). מכיל מיליוני אסטרואידים אך מסתם הכוללת פחות מ-4% ממסת הירח. הפרעות כבידה של צדק יצרו "פערי קירקווד" — אזורים ריקים ממסלולים תהודתיים.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">NEA</div>
+      <h3>אסטרואידים קרובי-ארץ (NEAs)</h3>
+      <p>מסלולם חותך או קרוב למסלול כדור הארץ (מרחק פריהליון פחות מ-1.3 AU). מחולקים לתת-קבוצות: אמור, אפולו, אטן ואתירה. נאסא עוקבת אחרי ~33,000 ידועים.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">TROJAN</div>
+      <h3>אסטרואידים טרויאניים</h3>
+      <p>נלכדו בנקודות לגראנז' L4 ו-L5 של כוכבי לכת. לצדק יש יותר מ-12,000 טרויאניים. כדור הארץ עצמו מכיל לפחות אסטרואיד טרויאני אחד ידוע: 2010 TK7.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">PHA</div>
+      <h3>PHAs — מסכנים פוטנציאלית</h3>
+      <p>Potentially Hazardous Asteroids: גדולים מ-140 מטר ומסלולם יכול להתקרב לכדור הארץ בפחות מ-0.05 AU. כ-2,300 ידועים. אף אחד לא איים ברצינות ב-100 השנה הקרובות.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">TYPE-C</div>
+      <h3>C-Type — פחמניים</h3>
+      <p>הנפוצים ביותר (75%). כהים מאוד (אלבדו נמוך), עתירי פחמן ומים. נמצאים בעיקר בחלק החיצוני של החגורה. דוגמה: 162173 ריוגו — נחקר ע"י חללית Hayabusa2 של יפן.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">TYPE-S</div>
+      <h3>S-Type — סיליקטיים</h3>
+      <p>17% מהאסטרואידים. עשויים מסיליקטים ו-olivine. בהירים יחסית. נמצאים בחלק הפנימי של החגורה. דוגמה: 433 ארוס — הראשון שנחקר ממסלול ע"י חללית NEAR.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">TYPE-M</div>
+      <h3>M-Type — מתכתיים</h3>
+      <p>8% מהאסטרואידים. עשויים בעיקר ברזל וניקל — ליבות של גופים שהתנגשו והתנפצו. 16 פסיכה הוא הגדול שבהם. נאסא שלחה אליו חללית Psyche ב-2023.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-badge">CENTAUR</div>
+      <h3>קנטאורים</h3>
+      <p>גופים הנעים בין מסלולי צדק לנפטון. מסלוליהם אינם יציבים — מושפעים ממשיכת כוכבי הלכת הגדולים. 2060 כירון הוא הידוע שבהם, ומציג גם פעילות שבטית!</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- SCIENTISTS -->
+<section id="scientists">
+  <div class="divider"></div>
+  <h2 class="section-title">פיזיקאים ומדענים בתחום</h2>
+  <p class="section-sub">הגאונים שגילו, מיפו ועיצבו את הבנתנו על אסטרואידים ומערכת השמש</p>
+  <div class="scientists-grid">
+
+    <div class="sci-card">
+      <div class="sci-avatar">K</div>
+      <h3>יוהנס קפלר</h3>
+      <div class="sci-years">1571–1630 · גרמניה</div>
+      <p>ניסח את שלושת חוקי התנועה הפלנטרית. חוקיו מגדירים מסלולים אליפטיים, שינויי מהירות וקשר בין מרחק לזמן מסלול — הבסיס להבנת כל גוף סביב השמש.</p>
+      <div class="sci-discovery">⚡ חוקי קפלר לתנועה פלנטרית (1619)</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">N</div>
+      <h3>אייזק ניוטון</h3>
+      <div class="sci-years">1643–1727 · אנגליה</div>
+      <p>חוק הכבידה האוניברסלית שלו (F=GMm/r²) מסביר מדוע אסטרואידים מסתובבים סביב השמש ולא נמלטים למרחב. חוקי התנועה שלו הם הבסיס לחישוב מסלולים.</p>
+      <div class="sci-discovery">⚡ חוק הכבידה האוניברסלית (1687)</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">P</div>
+      <h3>הנריאטה סוואן לוויט</h3>
+      <div class="sci-years">1868–1921 · ארה״ב</div>
+      <p>גילתה את קשר תקופה-בהירות בסיפיאידים, מה שאפשר לאסטרונומים למדוד מרחקים קוסמיים עצומים בדיוק — כולל מרחקי אסטרואידים וגופים קטנים.</p>
+      <div class="sci-discovery">⚡ קשר תקופה-אור לכוכבים (1912)</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">G</div>
+      <h3>הנס-ג׳ורג׳ קמנץ</h3>
+      <div class="sci-years">1894–1956 · גרמניה</div>
+      <p>מי ש"גילה" את פער קירקווד הראשון. מחקריו הראו כיצד תהודה עם צדק יוצרת אזורים ריקים בחגורת האסטרואידים — עיצוב פיזיקלי שמשפיע על יציבות המסלולים.</p>
+      <div class="sci-discovery">⚡ תיאוריית פערי קירקווד</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">Y</div>
+      <h3>איוואן יארקובסקי</h3>
+      <div class="sci-years">1844–1902 · רוסיה</div>
+      <p>גילה כי לחץ קרינת השמש על גוף מסתובב יוצר כוח קטן אך מצטבר (אפקט יארקובסקי). תגלית שנחשבה שולית — כיום ידוע שהיא גורמת לאסטרואידים לשנות מסלול לאורך מיליוני שנים.</p>
+      <div class="sci-discovery">⚡ אפקט יארקובסקי (1900)</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">S</div>
+      <h3>קרולין שומייקר</h3>
+      <div class="sci-years">1929–2021 · ארה״ב</div>
+      <p>גילתה 32 שביטים ומאות אסטרואידים. שביט שומייקר-לוי 9 שגילתה (עם בעלה ולוי) התנגש בצדק ב-1994 — פגיעה היסטורית שצולמה לראשונה בזמן אמת.</p>
+      <div class="sci-discovery">⚡ שביט שומייקר-לוי 9 (1993)</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">C</div>
+      <h3>גינו צ׳פוני</h3>
+      <div class="sci-years">1952– · איטליה/ארה״ב</div>
+      <p>אחד ממפתחי שיטות ה-Planetary Defense. מחקריו על הפצה של שברי התנגשות ועל מאפייני PHAs אפשרו לבנות מודלים לניבוי ולהגנה מאסטרואידים מסכנים.</p>
+      <div class="sci-discovery">⚡ מחקר הגנה פלנטרית</div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-avatar">D</div>
+      <h3>צוות DART – נאסא</h3>
+      <div class="sci-years">2022 · ארה״ב</div>
+      <p>ב-26 בספטמבר 2022, חללית DART פגעה בדימורפוס (ירח של אסטרואיד דידימוס) בכוונה — ושינתה את מסלולו ב-32 דקות! ניסוי ראשון מוצלח בהגנה פלנטרית.</p>
+      <div class="sci-discovery">⚡ שינוי מסלול אסטרואיד בפועל (2022)</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIMENTS -->
+<div class="section-alt">
+<section id="experiments" style="max-width:1100px; margin:0 auto; padding:5rem 2rem;">
+  <div class="divider"></div>
+  <h2 class="section-title">ניסויים ומשימות מרכזיות</h2>
+  <p class="section-sub">ניסויים ומשימות שחוללו מהפכה בהבנת האסטרואידים</p>
+  <div class="exp-list">
+
+    <div class="exp-card">
+      <div class="exp-num">01</div>
+      <div>
+        <h3>משימת NEAR Shoemaker — חקר 433 ארוס (1996–2001)</h3>
+        <p>חללית NEAR הייתה הראשונה שנכנסה למסלול סביב אסטרואיד ולבסוף נחתה עליו. 433 ארוס הוא אסטרואיד S-Type בקוטר 33 ק"מ. הנחיתה ב-2001 סיפקה נתונים ייחודיים על הרכב פני השטח, מדידת כוח הכבידה המקומי ומאפיינים גאולוגיים. הכבידה על ארוס היא פחות מ-0.001g — כלמעט אפסית.</p>
+        <div class="exp-result">💡 תוצאה: מדידה ראשונה ישירה של כוח כבידה על אסטרואיד. אישור שרכב S-Type דומה לאלכאונדריטים.</div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">02</div>
+      <div>
+        <h3>Hayabusa2 — דגימה מ-162173 ריוגו (2014–2020)</h3>
+        <p>חללית יפנית שנחתה על ריוגו — אסטרואיד C-Type בקוטר 900 מטר — ואספה דגימות. ריוגו הוא גוף "ערמת חצץ" (rubble pile) המוחזק יחד רק ע"י כבידה חלשה. הדגימות שהוחזרו הכילו חומצות אמינו ומולקולות אורגניות — רמז לתפקיד האסטרואידים בהבאת חיים לכדור הארץ!</p>
+        <div class="exp-result">💡 תוצאה: גילוי אורגניקה ומים בסיסיים בחומר פרימיטיבי מגיל 4.6 מיליארד שנה.</div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">03</div>
+      <div>
+        <h3>OSIRIS-REx — דגימה מ-101955 בנו (2016–2023)</h3>
+        <p>משימת נאסא לאסטרואיד בנו (PHA!) — אספה 4.7 גרם חומר שהוחזרו ב-2023. בנו מוגדר כ"ערמת חצץ" בקוטר 500 מטר. מדידות OSIRIS-REx אישרו שאפקט יארקובסקי מניע אותו ומסלולו עשוי להוביל להתקרבות לכדור הארץ בין 2175 ל-2199.</p>
+        <div class="exp-result">💡 תוצאה: הוכחת אפקט יארקובסקי בנתונים מדויקים. דגימות שהכילו מים ואורגניקה.</div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">04</div>
+      <div>
+        <h3>DART — Double Asteroid Redirection Test (2021–2022)</h3>
+        <p>ניסוי הגנה פלנטרית ראשון בהיסטוריה. חללית DART (558 ק"ג) פגעה בדימורפוס (160 מטר) בשיטת פגיעה קינטית. לפני: מסלול בן 11 שעות ו-55 דקות סביב דידימוס. אחרי: 11 שעות ו-23 דקות — שינוי של 32 דקות! (נאסא ציפתה ל-73 שניות לפחות). הצלחה מסחררת.</p>
+        <div class="exp-result">💡 תוצאה: הוכחה ראשונה שניתן לשנות מסלול אסטרואיד בכוונה תחילה. עצי שרפרף של חומר הועפו ויצרו "דחיפה מוגברת".</div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">05</div>
+      <div>
+        <h3>אירוע טונגוסקה — "ניסוי טבעי" (30 ביוני 1908)</h3>
+        <p>גוף קוסמי (שביט/אסטרואיד) בקוטר ~50–80 מטר פרץ באטמוספרה מעל סיביר וגרם להתפוצצות אוויר (airburst) של כ-10–15 מגה-טון TNT. השטח מוטח של ~2,000 ק"מ². ללא כל אדם שנהרג כי האזור היה מדבר. הנזק היה הכי גדול לו היה מעל עיר גדולה.</p>
+        <div class="exp-result">💡 לקח: גופים קטנים יחסית (פחות מ-100 מטר) יכולים לגרום להרס עצום. אטמוספרה מגינה על כדור הארץ אך לא תמיד מספיק.</div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">06</div>
+      <div>
+        <h3>גוף הפגיעה של אקסם K-Pg (66 מיליון שנה)</h3>
+        <p>האסטרואיד שפגע ביוקטן (כיום גוף אקסם) בקוטר ~10–15 ק"מ שחרר אנרגיה של 100 מיליון מגה-טון TNT. גרם לחיסול 75% מכל מיני החיים בכדור הארץ, כולל הדינוזאורים. השכבה העשירה באירידיום בשכבות הגיאולוגיות ברחבי העולם היא "חתימתו". גילוי לוויס ולואתר אלברז (1980).</p>
+        <div class="exp-result">💡 לקח: אסטרואידים גדולים הם גורם ברמה של הכחדה המונית. ההגנה הפלנטרית היא שאלה של הישרדות מין האדם.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- MIND MAP -->
+<section id="mindmap">
+  <div class="divider"></div>
+  <h2 class="section-title">מפת חשיבה</h2>
+  <p class="section-sub">לחצו על כל ענף לפירוט נוסף</p>
+  <div class="mindmap-wrap">
+    <div class="mindmap-center">
+      <div class="center-node">☄ אסטרואידים</div>
+    </div>
+    <div class="mindmap-branches">
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">🌌 פיזיקה בסיסית</div>
+        <ul class="branch-items">
+          <li>חוק הכבידה: F=GMm/r²</li>
+          <li>מסלולים אליפטיים (קפלר)</li>
+          <li>שימור אנרגיה ותנע</li>
+          <li>אפקט יארקובסקי</li>
+        </ul>
+        <div class="branch-detail">אסטרואידים מצייתים לאותם חוקי פיזיקה כמו כוכבי הלכת. הכבידה של השמש מחזיקה אותם במסלולים, תנע זוויתי שמור, ולחץ קרינה יכול לסטות אותם לאורך מיליוני שנים.</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">🪨 סיווג וסוגים</div>
+        <ul class="branch-items">
+          <li>C-Type (פחמני) — 75%</li>
+          <li>S-Type (סיליקטי) — 17%</li>
+          <li>M-Type (מתכתי) — 8%</li>
+          <li>NEA, PHA, Trojan, Centaur</li>
+        </ul>
+        <div class="branch-detail">הסיווג מבוסס על ספקטרוסקופיה — ניתוח אורכי גל שהאסטרואיד בולע ומחזיר. כל יסוד כימי מציג טביעת אצבע ספקטרלית ייחודית (נוסחת E=hf).</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">📍 מיקום במערכת השמש</div>
+        <ul class="branch-items">
+          <li>חגורה ראשית: מאדים–צדק</li>
+          <li>נקודות לגראנז' L4, L5</li>
+          <li>NEAs קרוב לכדור הארץ</li>
+          <li>קנטאורים: צדק–נפטון</li>
+        </ul>
+        <div class="branch-detail">פיזיקת נקודות לגראנז': כוח הכבידה של השמש + כוכב הלכת + כוח הצנטריפוגלי מאזנים. L4 ו-L5 יציבים (כוח המשיב חוזר למרכז).</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">💥 התנגשויות ואיום</div>
+        <ul class="branch-items">
+          <li>Ek = ½mv² (אנרגיה עצומה)</li>
+          <li>טונגוסקה 1908 (~15 MT)</li>
+          <li>K-Pg 66Ma (הכחדה)</li>
+          <li>~2,300 PHAs ידועים</li>
+        </ul>
+        <div class="branch-detail">סכנת ההתנגשות גדלה עם גודל האסטרואיד: <25m שורף באטמוספרה, 25–140m airburst הרסני, >140m מגיע לקרקע, >1km השפעה גלובלית.</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">🛡️ הגנה פלנטרית</div>
+        <ul class="branch-items">
+          <li>DART — פגיעה קינטית (2022)</li>
+          <li>Gravity Tractor</li>
+          <li>Nuclear deflection</li>
+          <li>HERA — המשך מחקר DART</li>
+        </ul>
+        <div class="branch-detail">שיטות הסטה: (1) פגיעה קינטית — שינוי מהירות קטן = שינוי מסלול גדול לאורך זמן. (2) גרר כבידה — שאיבה איטית ע"י ריחוף לידו. (3) פיצוץ גרעיני — רק במקרי חירום קיצוניים.</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">🔬 חקר ומשימות חלל</div>
+        <ul class="branch-items">
+          <li>NEAR (1996–2001)</li>
+          <li>Hayabusa2 (2014–2020)</li>
+          <li>OSIRIS-REx (2016–2023)</li>
+          <li>Psyche Mission (2023–)</li>
+        </ul>
+        <div class="branch-detail">משימות דגימה מאפשרות ניתוח ישיר של חומר פרימיטיבי. Hayabusa2 גילה אורגניקה על ריוגו, OSIRIS-REx מצא מים על בנו — שניהם תומכים בתיאוריית "מי" החיים על כדור הארץ.</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">📜 היסטוריה של מערכת השמש</div>
+        <ul class="branch-items">
+          <li>גיל ~4.6 מיליארד שנה</li>
+          <li>שרידי הדיסקה הפרוטו-שמשית</li>
+          <li>הפגזה כבדה מאוחרת (LHB)</li>
+          <li>חומר לא-מבודל (פרימיטיבי)</li>
+        </ul>
+        <div class="branch-detail">אסטרואידי C-Type הם "כמוסות זמן" — חומרם לא עבר בידול תרמי כמו בכוכבי לכת. ניתוח איזוטופי מאפשר לתארך אותם בדיוק להיווצרות מערכת השמש.</div>
+      </div>
+      <div class="branch" onclick="this.classList.toggle('open')">
+        <div class="branch-title">🏭 מיניות אסטרואידים</div>
+        <ul class="branch-items">
+          <li>M-Types עשירים בברזל/ניקל</li>
+          <li>16 פסיכה: מסה $10 quintillion</li>
+          <li>מים בC-Types</li>
+          <li>תשתית לבסיסי חלל</li>
+        </ul>
+        <div class="branch-detail">אסטרואיד אחד מתכתי יכול להכיל יותר מתכת מכל ההפקה האנושית לאורך ההיסטוריה. כריית אסטרואידים היא כיום תחום ריאלי — חברות כמו AstroForge כבר בשלבי פיתוח ראשונים.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES & VIDEOS -->
+<div class="section-alt">
+<section id="sources" style="max-width:1100px; margin:0 auto; padding:5rem 2rem;">
+  <div class="divider"></div>
+  <h2 class="section-title">מקורות, סרטונים ומאמרים</h2>
+  <p class="section-sub">משאבים מומלצים לחקר מעמיק — נבחרו בקפידה</p>
+
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">🎬 סרטונים מומלצים</h3>
+  <div class="video-row">
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=MxT0USpYpDI" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/MxT0USpYpDI/hqdefault.jpg" alt="DART Mission">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>Double Asteroid Redirection Test (DART)</h4>
+        <p>הסבר מצוין על ניסוי DART של נאסא — כיצד שינו מסלול אסטרואיד לראשונה בהיסטוריה</p>
+        <span class="video-tag">NASA · YouTube</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=NwCyN3ZYxKc" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/NwCyN3ZYxKc/hqdefault.jpg" alt="Meteor Showers 101">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>Meteor Showers 101 | National Geographic</h4>
+        <p>מבוא לגופים בין-כוכביים — מה ההבדל בין מטאור, מטאוריט ואסטרואיד ומאיפה הם באים</p>
+        <span class="video-tag">National Geographic · YouTube</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=AUwBjPaU7vg" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/AUwBjPaU7vg/hqdefault.jpg" alt="Asteroid Belt Explained">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>Kuiper Belt And Asteroid Belt Explained</h4>
+        <p>הסבר על חגורת האסטרואידים וחגורת קויפר — מה הם, מה ההבדל וממה הם עשויים</p>
+        <span class="video-tag">YouTube</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=y8XvQNt26KI" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/y8XvQNt26KI/hqdefault.jpg" alt="Asteroid Mining">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>Unlimited Resources From Space – Asteroid Mining</h4>
+        <p>כיצד בעתיד נוכל לכרות אסטרואידים ומה הערך האדיר של המשאבים בחלל</p>
+        <span class="video-tag">Kurzgesagt · YouTube</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=JB2eoQfOGBA" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/JB2eoQfOGBA/hqdefault.jpg" alt="Chelyabinsk">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>The Chelyabinsk Meteor: What We Know</h4>
+        <p>ניתוח מדעי מלא של פגיעת המטאור בצ'ליאבינסק 2013 — מה קרה ולמה זה חשוב</p>
+        <span class="video-tag">SciShow · YouTube</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=dFCbJmgeHmA" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/dFCbJmgeHmA/hqdefault.jpg" alt="Day the Dinosaurs Died">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </a>
+      <div class="video-info">
+        <h4>The Day the Dinosaurs Died – Minute by Minute</h4>
+        <p>כיצד אסטרואיד בקוטר 10 ק"מ השמיד 75% מהמינים לפני 66 מיליון שנה — דקה אחרי דקה</p>
+        <span class="video-tag">Kurzgesagt · YouTube</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:1rem; color:var(--text);">🌐 אתרים, סימולציות ומאמרים</h3>
+  <div class="links-grid">
+    <div>
+      <a class="link-card" href="https://www.nasa.gov/planetarydefense" target="_blank">
+        <div class="link-icon">🛡️</div>
+        <div class="link-card-body">
+          <h4>NASA Planetary Defense</h4>
+          <p>מרכז הגנה פלנטרית של נאסא — עקיבת PHAs בזמן אמת, נתוני DART ומשימות עתידיות</p>
+          <div class="link-source">nasa.gov</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://cneos.jpl.nasa.gov" target="_blank">
+        <div class="link-icon">📡</div>
+        <div class="link-card-body">
+          <h4>CNEOS — Center for Near Earth Object Studies</h4>
+          <p>מסד הנתונים המלא של כל האסטרואידים הקרובים, מסלולים ורמות סיכון מעודכנות</p>
+          <div class="link-source">cneos.jpl.nasa.gov</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://www.esa.int/Safety_Security/Planetary_Defence" target="_blank">
+        <div class="link-icon">🇪🇺</div>
+        <div class="link-card-body">
+          <h4>ESA Planetary Defence</h4>
+          <p>סוכנות החלל האירופית — מחקר, מיפוי ומשימת HERA (המשך DART)</p>
+          <div class="link-source">esa.int</div>
+        </div>
+      </a>
+    </div>
+    <div>
+      <a class="link-card" href="https://phet.colorado.edu/en/simulations/gravity-and-orbits" target="_blank">
+        <div class="link-icon">🔬</div>
+        <div class="link-card-body">
+          <h4>PhET — Gravity and Orbits</h4>
+          <p>סימולציה אינטראקטיבית לחקר כבידה ומסלולים — שנה מסה, מרחק וראה כיצד מסלול משתנה</p>
+          <div class="link-source">phet.colorado.edu</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://eyes.nasa.gov/apps/asteroids" target="_blank">
+        <div class="link-icon">👁️</div>
+        <div class="link-card-body">
+          <h4>NASA Eyes on Asteroids</h4>
+          <p>ויזואליזציה תלת-ממדית אינטראקטיבית של כל אסטרואידי ה-NEA ידועים בזמן אמת</p>
+          <div class="link-source">eyes.nasa.gov</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://www.minorplanetcenter.net" target="_blank">
+        <div class="link-icon">📚</div>
+        <div class="link-card-body">
+          <h4>Minor Planet Center</h4>
+          <p>מרכז הרשמי לקטלוג כל גופי מערכת השמש הקטנים — נתונים מדעיים מלאים</p>
+          <div class="link-source">minorplanetcenter.net</div>
+        </div>
+      </a>
+    </div>
+    <div>
+      <a class="link-card" href="https://www.lpi.usra.edu/meteor/metbull.php" target="_blank">
+        <div class="link-icon">🪨</div>
+        <div class="link-card-body">
+          <h4>Meteoritical Bulletin Database</h4>
+          <p>מאגר כל המטאוריטים הידועים — הרכב, מקום מציאה, ניתוחים מדעיים</p>
+          <div class="link-source">lpi.usra.edu</div>
+        </div>
+      </a>
+      <a class="link-card" href="https://www.khanacademy.org/science/cosmology-and-astronomy" target="_blank">
+        <div class="link-icon">🎓</div>
+        <div class="link-card-body">
+          <h4>Khan Academy — Astronomy</h4>
+          <p>שיעורים חינמיים מלאים על מערכת השמש, כבידה ומסלולים</p>
+          <div class="link-source">khanacademy.org</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- SUMMARY -->
+<section id="summary">
+  <div class="divider"></div>
+  <h2 class="section-title">סיכום ורפלקציה</h2>
+  <p class="section-sub">מסקנות, תהליך הלמידה ומשוב עמיתים</p>
+
+  <div class="summary-box">
+    <h3>מה למדתי: אסטרואידים — בין שרידי עבר לאיום של העתיד</h3>
+    <p>לפני שחקרתי את הנושא, חשבתי על אסטרואידים כ"אבנים שמעופות בחלל". לאחר החקר הבנתי שהם הרבה יותר מכך: הם <span class="highlight">כמוסות זמן</span> מגיל 4.6 מיליארד שנה, הם <span class="highlight">שמרו על חומר פרימיטיבי</span> שלא עבר שינוי מאז היווצרות מערכת השמש, ואולי הביאו לכדור הארץ את <span class="highlight">המים והאורגניקה</span> שאיפשרו את הופעת החיים.</p>
+    <p>המושג שהכי הפתיע אותי הוא <span class="highlight">אפקט יארקובסקי</span>: לחץ קרינת שמש — כוח שנראה זניח לחלוטין — יכול לאורך מיליוני שנים לשנות מסלול אסטרואיד ממצב בטוח לנתיב מתנגש. זה מלמד שבפיזיקה, גם כוחות קטנים יכולים לצבור השפעות עצומות לאורך זמן מספיק. ושוב — זה לא מופשט: OSIRIS-REx מדד את האפקט הזה על בנו בנתונים ישירים.</p>
+    <p>תובנה נוספת: <span class="highlight">הגנה פלנטרית היא בעיה פתירה</span>. ניסוי DART ב-2022 הוכיח שניתן לשנות מסלול אסטרואיד בכוונה תחילה — לראשונה בהיסטוריה. ההבדל בין טרגדיה לבין הישרדות הוא זיהוי מוקדם ותגובה מהירה — שניהם ניתנים לתכנון. אבל גם זה מעורר שאלה: מי מחליט? אם ניתן לשנות מסלול לכיוון שמרחיק מארצנו — אולי הוא מתקרב למדינה אחרת? ממד האחריות הבינלאומית הפתיע אותי לא פחות מהפיזיקה עצמה.</p>
+  </div>
+
+  <div class="summary-box">
+    <h3>תהליך הלמידה — הצלחות, קשיים ושינויי תפישה</h3>
+    <p><span class="highlight">מה היה קשה עבורי:</span> להבין את ה"מדוע" מאחורי נקודות לגראנז' — מדוע L4 ו-L5 יציבות ואחרות לא? לקח לי זמן לתפוס שיציבות מגיעה ממשחק בין שלושה כוחות שיוצרים "קערת פוטנציאל" שמחזירה גופים לנקודה אם הם סוטים. ברגע שהמחשתי את זה כ"תחתית קערה לעומת ראש גבעה", הבנתי למה זה ככה.</p>
+    <p><span class="highlight">שינוי תפישה עמוק:</span> בתחילה חשבתי שהגנה פלנטרית היא מדע-בדיוני. כשהבנתי שנאסא מנהלת מסד נתונים חי של 2,300 PHAs, שמעקב מתמיד מתרחש עכשיו, ושDART כבר הצליח — תפישתי השתנתה לחלוטין. זה לא "אם" אלא "מתי" — וזה הפך את הנושא מעניין אקדמי לנושא שרלוונטי לחיי ממש.</p>
+    <p><span class="highlight">מה עזר:</span> משימות החלל כמו Hayabusa2 ו-DART הפכו את הפיזיקה מנוסחאות לסיפורים ממשיים. כשרואים שחללית שינתה מסלול אסטרואיד ב-32 דקות — חוק שימור התנע הופך לחי ומוחשי. הבנתי שהדרך הטובה ביותר ללמוד פיזיקה היא דרך ניסויים אמיתיים, לא רק דרך נוסחאות.</p>
+    <p><span class="highlight">מה הייתי רוצה לחקור עוד:</span> כיצד פועלת ספקטרוסקופיה לניתוח הרכב אסטרואידים ממרחק — הבסיס הקוונטי (E=hf) מוכר לי, אבל הביצוע המעשי מרתק. כמו כן, עד כמה כריית אסטרואידים מסחרית קרובה למציאות — כלכלית ולא רק טכנולוגית.</p>
+  </div>
+
+  <div class="summary-box">
+    <h3>הקשר לחיי היומיום</h3>
+    <p>מה שהפתיע אותי: <span class="highlight">אסטרואידים קשורים ישירות לקיומנו</span>. מחקרי Hayabusa2 ו-OSIRIS-REx מצאו אורגניקה ומים על אסטרואידים C-Type — תומכים בהשערה שאסטרואידים ושביטים הביאו את אבני הבניין של החיים לכדור הארץ הצעיר.</p>
+    <p>בנוסף: <span class="highlight">כל מטאוריט שנמצא בכדור הארץ</span> הוא שבר של אסטרואיד. הברזל שבמסמר, הניקל שבמטבע — חלק ממנו הגיע ממטאוריטים שנפלו לאורך 4.5 מיליארד שנה. אנחנו ממש עשויים בחלקנו מחומר של אסטרואידים.</p>
+    <p>הקשר הכי לא צפוי: <span class="highlight">אי-הוודאות כחלק מהמדע</span>. הסתברות הפגיעה של בנו בכדור הארץ בין 2175 ל-2199 היא ~0.057% — לא אפס, לא ודאות. מדענים מפרסמים את הנתון הזה בשקיפות, ממשיכים למדוד ולשפר. זה לימד אותי שמדע אמיתי לא נותן תשובות מוחלטות — הוא מצמצם את הטווח שבו האמת מתחבאת.</p>
+  </div>
+
+  <div class="feedback-card">
+    <h4>💬 משוב עצמי ועמיתים</h4>
+    <p><strong>חוזקות:</strong> כיסוי רחב מהפיזיקה הבסיסית ועד להגנה פלנטרית מעשית, עם נוסחאות, ניסויים ומשימות ממשיות. הצלחתי לחבר בין חוקי פיזיקה "יבשים" לאירועים קוסמיים מרתקים.</p>
+    <p style="margin-top:0.7rem;"><strong>מה הייתי משפר:</strong> הוספת ניסוי ביתי פשוט (כמו הדמיית כוח כבידה עם קמח וכדורים), ותרשים ממחיש יותר של חגורת האסטרואידים עם ה-PHAs. כמו כן, הייתי מוסיף פרק על הממד הכלכלי — כריית אסטרואידים כבר נמצאת בשלב תכנון מסחרי.</p>
+    <p style="margin-top:0.7rem;"><strong>שאלה מעמית א׳:</strong> "אם אסטרואיד בקוטר 140 מטר מסכן, למה הגבול הוא דווקא 140 מטר?"<br>
+    תשובה: 140 מטר הוא קוטר שמעליו האנרגיה הקינטית בפגיעה עוברת את הסף של "נזק אזורי" ל"נזק אזורי-לאומי" — גוף קטן יותר יישרף באטמוספרה או יגרום לנזק מקומי בלבד. המספר הוא מוסכמה מדעית מבוססת מודלים סימולטוריים.</p>
+    <p style="margin-top:0.7rem;"><strong>שאלה מעמית ב׳:</strong> "אם DART שינה מסלול של אסטרואיד — מי בעצם מחליט לאן לשנות את המסלול?"<br>
+    תשובה: שאלה מצוינת שגם אני שאלתי! בפועל, ניסוי DART "דחף" את דימורפוס לאט יותר בסיבוב סביב דידימוס — לא שינה כיוון באמת. אך לאסטרואיד שמתקרב לארץ, שינוי לכיוון "פחות מסוכן" עלול לאיים על מדינה אחרת. ה-UN קיים דיונים על נושא זה, אבל אין הסכם בינלאומי עדיין. זה ממחיש שהגנה פלנטרית היא לא רק אתגר מדעי — אלא גם פוליטי.</p>
+    <p style="margin-top:0.7rem;"><strong>הערכה עצמית ביקורתית:</strong> ביליתי זמן רב בהבנת הנוסחאות, אך פחות זמן בשאלת "מה זה אומר לנו?". לדוגמה, כמה נוסחת F=GMm/r² חשובה לאסטרואיד שבפועל מסלולו מחושב בסימולציות מחשב? בסיקור הבא הייתי רוצה להתחיל מהשאלות הגדולות ולעבוד אחורה לפיזיקה.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>☄ <strong>אסטרואידים</strong> — פיזיקה · <strong>נועם גפן</strong> · כיתה י״ב2</p>
+  <p style="margin-top:0.4rem; font-size:0.78rem;">F = GMm/r² · Ek = ½mv² · dA/dt = const · E = hf</p>
+</footer>
+
+<script>
+function openPopup(id) {
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.stat-popup-overlay.active').forEach(function(el) {
+      el.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+});
+</script>
+</body>
+</html>
